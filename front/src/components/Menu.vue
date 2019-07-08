@@ -24,7 +24,7 @@
     color:#ffffff;
     line-height: 50px;
     font-weight: bold;
-    float: left;
+    float: right;
   }
 </style>
 

@@ -61,10 +61,10 @@ class ParseDat
                 for($i=0; $i<count($array); $i++){
                     $item = explode('-', trim($array[$i]));
                     $preco = floatval(preg_replace("/[^0-9.]/", "",$item[2]));
-                    $this->itemList->add(new Item(intval($item[0]), intval($item[1]), $preco));
+                    $itemList->add(new Item(intval($item[0]), intval($item[1]), $preco));
                 }
 
-                $this->salesList->add(new Sales($data[0], $data[1], $this->itemList, $this->salesManList->getByName($data[5])));
+                $this->salesList->add(new Sales($data[0], $data[1], $itemList, $this->salesManList->getByName($data[5])));
             }
         }
     }

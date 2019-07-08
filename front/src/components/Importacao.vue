@@ -4,8 +4,27 @@
       <div class="imporcacao-area">
         <input type="file" class="form-control-file" id="file" ref="file" v-on:change="handleFileUpload()">
         <div class="button">
-          <button v-on:click="submitFile()" type="submit" class="btn btn-primary">Importar</button>
+          <button v-if="importacao == false" v-on:click="submitFile()" type="submit" class="btn btn-primary">Importar</button>
         </div>
+          <table v-if="importacao != false" id='importacao-table' style="width:100%">
+            <tr>
+              <th>Quantidade de Vendedores</th>
+              <th>Quantidade de Clientes</th>
+              <th>Média Salarial</th>
+              <th>ID Maior Venda</th>
+              <th>Pior Vendedor</th>
+            </tr>
+            <tr>
+              <td>{{importacao.qtdVendedores}}</td>
+              <td>{{importacao.qtdClientes}}</td>
+              <td>{{importacao.mediaSalarial}}</td>
+              <td>{{importacao.idVendaMaisCara}}</td>
+              <td>{{importacao.nomePiorVendedor}}</td>
+            </tr>
+          </table>
+          <div v-if="erro"  class="mensagem">
+            {{mensagem}}
+          </div>
       </div>
     </div>
 </template>
@@ -18,7 +37,10 @@ export default {
   },
   data(){
       return{
-          file:''
+          file:'',
+          importacao:false,
+          mensagem: '',
+          erro:false
       }
   },
   methods:{
@@ -28,16 +50,17 @@ export default {
       submitFile(){
           let formData = new FormData();
           formData.append('file', this.file);
-          axios.post( 'http://localhost:8080/importa.php',formData,{
+          axios.post( 'http://localhost:8000/importa.php',formData,{
                   headers: {
                       'Content-Type': 'multipart/form-data',
                   }
               }
           ).then((res) => {
-              if(res.status){
-                  this.items = res.data.data.headers;
-                  this.file = res.data.data.url;
-                  this.etapa++;
+              if(!res.data.status){
+                  this.erro = true;
+                  this.mensagem = res.data.msg;
+              }else {
+                  this.importacao = res.data;
               }
           }).catch((err) => console.error(err));
       }
@@ -72,5 +95,12 @@ button{
 }
 .imporcacao-area{
   margin-top: 30px;
+}
+#importacao-table{
+  margin-top: 100px;
+}
+.mensagem {
+  color: red;
+  margin-top: 40px;
 }
 </style>

@@ -40,6 +40,7 @@ class Sales
     private function calculaValorTotalVenda(): float
     {
         foreach ($this->itemList->getList() as $venda){
+
             $this->valorTotal += $venda->getPrice();
         }
 
