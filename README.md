@@ -10,6 +10,7 @@
 
 - cd /front
 - npm install
+- npm install --save axios
 - npm run serve
 
 ### Instalação Back-end
