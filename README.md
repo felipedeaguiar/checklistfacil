@@ -8,14 +8,14 @@
 
 ### Instalação front-end
 
-cd /front
-npm install
-npm run serve
+- cd /front
+- npm install
+- npm run serve
 
 ### Instalação Back-end
 
-composer install
-php -S localhost:8000 
+- composer install
+- php -S localhost:8000 
 
 ## Testes unitários
 
